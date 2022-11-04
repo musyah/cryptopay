@@ -23,8 +23,8 @@ public class UserService implements UserDetailsService {
     @Autowired
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    @Autowired
-    private final EmailCheck emailChecker;
+//    @Autowired
+//    private final EmailCheck emailChecker;
     @Autowired
     private final SmsService sms;
     public List<UserInfo> getAllUserDetails() {
@@ -44,8 +44,10 @@ public class UserService implements UserDetailsService {
 
 
     public String signUpUser(UserInfo userInfo){
-
-        emailChecker.Checker();
+            boolean userExists = repository.findByEmail(userInfo.getEmail()).isPresent();
+            if (userExists){
+                throw new IllegalStateException("Wallet with the email already taken");
+            }
 
         String encodedPassword = bCryptPasswordEncoder.encode(userInfo.getPassword());
         userInfo.setPassword(encodedPassword);
