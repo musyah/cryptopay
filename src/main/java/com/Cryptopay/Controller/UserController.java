@@ -28,11 +28,11 @@ public class UserController {
     public List<UserInfo> getUser() {
         return userService.getAllUserDetails();
     }
-    @GetMapping("/Check")
-    public String check(String email) {
-        emailChecker.emailCheck(email);
-        return "";
-    }
+//    @GetMapping("/Check")
+//    public String check(String email) {
+//        emailChecker.emailCheck(email);
+//        return "";
+//    }
    @PostMapping("/Resend")
     public String getToken(@RequestParam("mobile")String mobile){
         return tokenService.resend(mobile);
