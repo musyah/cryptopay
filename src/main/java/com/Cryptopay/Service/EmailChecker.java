@@ -22,13 +22,13 @@ public class EmailChecker {
     }
     }
 
-    public String emailCheck(String email) {
-        Optional<UserInfo> emailChecker = repository.findByEmail(email);
-        if (emailChecker.isEmpty()) {
-            throw new IllegalStateException("Proceed to Register");
-        }
-        else{
-            return "Wallet with the email already exists";
-        }
+//    public String emailCheck(String email) {
+//        Optional<UserInfo> emailChecker = repository.findByEmail(email);
+//        if (emailChecker.isEmpty()) {
+//            throw new IllegalStateException("Proceed to Register");
+//        }
+//        else{
+//            return "Wallet with the email already exists";
+//        }
     }
 }
