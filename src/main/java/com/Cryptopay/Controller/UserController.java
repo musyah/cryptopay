@@ -4,7 +4,7 @@ import com.Cryptopay.Entity.RegistrationRequest;
 import com.Cryptopay.Entity.UserInfo;
 import com.Cryptopay.Service.AddUserService;
 import com.Cryptopay.Service.ConfirmationTokenService;
-import com.Cryptopay.Service.EmailChecker;
+import com.Cryptopay.Service.EmailCheck;
 import com.Cryptopay.Service.UserService;
 import lombok.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ public class UserController {
     @Autowired
     private final ConfirmationTokenService tokenService;
     @Autowired
-    private final EmailChecker emailChecker;
+    private final EmailCheck emailChecker;
 
     @GetMapping("/user")
     public List<UserInfo> getUser() {

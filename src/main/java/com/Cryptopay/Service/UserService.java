@@ -1,13 +1,8 @@
 package com.Cryptopay.Service;
 
 
-import com.Cryptopay.Config.TwilioConfig;
-import com.Cryptopay.Entity.ConfirmationToken;
 import com.Cryptopay.Entity.UserInfo;
 import com.Cryptopay.Repository.UserRepository;
-import com.twilio.rest.api.v2010.account.Message;
-import com.twilio.rest.api.v2010.account.MessageCreator;
-import com.twilio.type.PhoneNumber;
 import lombok.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -29,7 +24,7 @@ public class UserService implements UserDetailsService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    private final EmailChecker emailChecker;
+    private final EmailCheck emailChecker;
     @Autowired
     private final SmsService sms;
     public List<UserInfo> getAllUserDetails() {

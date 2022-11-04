@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-public class EmailChecker {
+public class EmailCheck {
     @Autowired
     private final UserRepository repository;
 
