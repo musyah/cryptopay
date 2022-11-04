@@ -1,0 +1,12 @@
+twilio:
+  account_sid: ACfa3a847dc829b8d9d5d96c6e5ed401bc
+  auth_token: 5a2d604ceb9413e9fbcb6128ee0858fb
+  trial_number: +18656013637
+
+mpesa:
+  daraja:
+    consumer-key: c6b6HxndnXPAffEAD5tVnq0ADGAaeAAp
+    consumer-secret: HC3nV21j41i2J08m
+    grant-type: client_credentials
+    oauth-endpoint: https://sandbox.safaricom.co.ke/oauth/v1/generate
+

@@ -3,7 +3,6 @@ package com.Cryptopay.Service;
 import com.Cryptopay.Entity.ConfirmationToken;
 import com.Cryptopay.Entity.RegistrationRequest;
 import com.Cryptopay.Entity.UserInfo;
-import com.Cryptopay.Entity.UserRole;
 import com.Cryptopay.Repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +29,7 @@ public class AddUserService {
                         request.getFirstName(),
                         request.getLastName(),
                         request.getPassword(),
-                        request.getMobile(),
-                        UserRole.USER
+                        request.getMobile()
                 )
 
         );

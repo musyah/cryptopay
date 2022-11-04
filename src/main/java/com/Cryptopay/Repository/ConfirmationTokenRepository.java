@@ -1,6 +1,8 @@
 package com.Cryptopay.Repository;
 
 import com.Cryptopay.Entity.ConfirmationToken;
+import com.Cryptopay.Entity.UserInfo;
+import org.hibernate.annotations.Where;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -23,4 +25,17 @@ public interface ConfirmationTokenRepository extends JpaRepository<ConfirmationT
     int updateConfirmedAt(String token,
                           LocalDateTime confirmedAt);
 
+//
+//    @Transactional
+//    @Query("Select from ConfirmationToken c" +
+//            "Where c.userinfo.email = ?2"
+//             )
+//    String getToken();
+//
+//    @Transactional
+//    @Query("Select from ConfirmationToken c" +
+//            "Where c.userinfo.email = ?2"+
+//            "get c.token"
+//    )
+//    String getToken();
 }

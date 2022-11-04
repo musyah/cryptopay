@@ -1,4 +1,4 @@
-package com.Cryptopay.Security.Config;
+package com.Cryptopay.Config.Security.Config;
 
 import com.Cryptopay.Service.UserService;
 import lombok.*;

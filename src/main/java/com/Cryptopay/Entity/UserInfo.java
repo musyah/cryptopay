@@ -10,10 +10,10 @@ import java.util.*;
 
 @Entity
 @Table(name = "userInfo")
-@Getter
-@Setter
 @NoArgsConstructor
 @EqualsAndHashCode
+@Getter
+@Setter
 public class UserInfo implements UserDetails {
 
 
@@ -30,15 +30,20 @@ public class UserInfo implements UserDetails {
     @Column(nullable = false, name = "password")
     private String password;
     @Column(nullable = false, name = "mobile")
-    private Integer mobile;
-    @Enumerated(EnumType.STRING)
-    private UserRole userRole;
+    private String mobile;
+
+    private String UserRole = "user";
+    @OneToOne
+    @JoinColumn(
+            name = "Wallet"
+    )
+    private Wallet wallet;
     private Boolean locked = false;
     private Boolean enabled = false;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(userRole.name());
+        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(UserRole);
         return Collections.singletonList(authority);
     }
 
@@ -51,7 +56,7 @@ public class UserInfo implements UserDetails {
         return lastName;
     }
 
-    public Integer getMobile() {
+    public String getMobile() {
         return mobile;
     }
 
@@ -85,12 +90,11 @@ public class UserInfo implements UserDetails {
         return enabled;
     }
 
-    public UserInfo(String email, String firstName, String lastName, String password, Integer mobile, UserRole userRole) {
+    public UserInfo(String email, String firstName, String lastName, String password, String mobile) {
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
         this.mobile = mobile;
-        this.userRole = userRole;
     }
 }

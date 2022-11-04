@@ -22,4 +22,5 @@ public interface UserRepository extends JpaRepository<UserInfo, Long> {
              "SET u.enabled = TRUE WHERE u.email = ?1")
      int enableuserInfo(String email);
 
+     public UserInfo findByMobile(String mobile);
 }
