@@ -13,7 +13,7 @@ import java.util.*;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/CryptoApp/Details")
+@RequestMapping("/CryptoApp/Onboard")
 public class UserController {
     @Autowired
     private final UserService userService;
@@ -21,6 +21,7 @@ public class UserController {
     private final AddUserService addUser;
     @Autowired
     private final ConfirmationTokenService tokenService;
+
 //    @Autowired
 //    private final EmailCheck emailChecker;
 
@@ -28,6 +29,7 @@ public class UserController {
     public List<UserInfo> getUser() {
         return userService.getAllUserDetails();
     }
+
 //    @GetMapping("/Check")
 //    public String check(String email) {
 //        emailChecker.emailCheck(email);
@@ -37,10 +39,11 @@ public class UserController {
     public String getToken(@RequestParam("mobile")String mobile){
         return tokenService.resend(mobile);
     }
-    @PostMapping("/save")
+    @PostMapping("/Save")
     public String Add(@RequestBody RegistrationRequest request) {
         return addUser.register(request);
     }
+
     @GetMapping("/confirm")
     public String register(@RequestParam("code") String token){
         return addUser.confirmToken(token);

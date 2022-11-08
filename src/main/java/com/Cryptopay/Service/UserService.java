@@ -35,32 +35,31 @@ public class UserService implements UserDetailsService {
 
     private final String USER_NOT_FOUND = "user with the email %s not found";
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return repository.findByEmail(email).orElseThrow(() ->
-                new UsernameNotFoundException(
-                        String.format(USER_NOT_FOUND, email))
-        );
+    public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
+         UserInfo userInfo = repository.findByEmail(userName);
+         if(userInfo== null){
+             throw new UsernameNotFoundException(
+                     String.format(USER_NOT_FOUND, userName));
+         }
+
+         return new org.springframework.security.core.userdetails.User(userInfo.getUsername(), userInfo.getPassword(), userInfo.getAuthorities());
     }
 
 
     public String signUpUser(UserInfo userInfo){
-            boolean userExists = repository.findByEmail(userInfo.getEmail()).isPresent();
-            if (userExists){
-                throw new IllegalStateException("Wallet with the email already taken");
-            }
+//            userExists = repository.findByEmail(userInfo.getEmail());
+//            if (userExists == null){
+//                throw new IllegalStateException("Wallet with the email already taken");
+//            }
 
         String encodedPassword = bCryptPasswordEncoder.encode(userInfo.getPassword());
         userInfo.setPassword(encodedPassword);
-        repository.save(userInfo);
+       repository.save(userInfo);
 
         return sms.sendSms(userInfo);
     }
-
-
 
     public int enableUserInfo(String email) {
         return repository.enableuserInfo(email);
     }
 }
-
-

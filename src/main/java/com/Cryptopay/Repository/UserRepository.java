@@ -11,16 +11,15 @@ import java.util.*;
 
 @Repository
 @Transactional(readOnly = true)
-public interface UserRepository extends JpaRepository<UserInfo, Long> {
+public interface  UserRepository extends JpaRepository<UserInfo, Long> {
 
-     Optional<UserInfo> findByEmail(String email);
+     UserInfo findByEmail(String email);
 
      @Transactional
      @Modifying
      @Query
              ("UPDATE UserInfo u " +
-             "SET u.enabled = TRUE WHERE u.email = ?1")
+                     "SET u.enabled = TRUE WHERE u.email = ?1")
      int enableuserInfo(String email);
 
-     public UserInfo findByMobile(String mobile);
 }

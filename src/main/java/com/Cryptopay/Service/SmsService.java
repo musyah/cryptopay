@@ -49,7 +49,7 @@ public class SmsService {
         creator.create();
 
         tokenService.saveToken(confirmationToken);
-        return token;
+        return "Code sent to your phone";
         }
 
     }
