@@ -3,19 +3,16 @@ package com.Cryptopay.Service;
 import com.Cryptopay.Config.TwilioConfig;
 import com.Cryptopay.Config.TwilioInitializer;
 import com.Cryptopay.Entity.ConfirmationToken;
-import com.Cryptopay.Entity.RegistrationRequest;
 import com.Cryptopay.Entity.UserInfo;
 import com.Cryptopay.Repository.ConfirmationTokenRepository;
-import com.twilio.base.Creator;
 import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.rest.api.v2010.account.MessageCreator;
 import com.twilio.type.PhoneNumber;
-import lombok.AllArgsConstructor;
+import lombok.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 
 @Service
@@ -49,7 +46,7 @@ public class SmsService {
         creator.create();
 
         tokenService.saveToken(confirmationToken);
-        return "Code sent to your phone";
+        return token;
         }
 
     }

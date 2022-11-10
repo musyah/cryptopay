@@ -7,6 +7,6 @@ import lombok.*;
 @NoArgsConstructor
 public class AuthRequest {
 
-    private String Username;
+    private String email;
     private String password;
 }

@@ -35,14 +35,14 @@ public class UserService implements UserDetailsService {
 
     private final String USER_NOT_FOUND = "user with the email %s not found";
     @Override
-    public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-         UserInfo userInfo = repository.findByEmail(userName);
+    public UserDetails loadUserByUsername(String Username) throws UsernameNotFoundException {
+         UserInfo userInfo = repository.findByEmail(Username);
          if(userInfo== null){
              throw new UsernameNotFoundException(
-                     String.format(USER_NOT_FOUND, userName));
+                     String.format(USER_NOT_FOUND, Username));
          }
 
-         return new org.springframework.security.core.userdetails.User(userInfo.getUsername(), userInfo.getPassword(), userInfo.getAuthorities());
+         return new org.springframework.security.core.userdetails.User(userInfo.getEmail(), userInfo.getPassword(), userInfo.getAuthorities());
     }
 
 

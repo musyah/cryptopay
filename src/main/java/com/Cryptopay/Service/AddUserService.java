@@ -29,6 +29,7 @@ public class AddUserService {
                         request.getFirstName(),
                         request.getLastName(),
                         request.getPassword(),
+                        request.getCpassword(),
                         request.getMobile()
                 )
 

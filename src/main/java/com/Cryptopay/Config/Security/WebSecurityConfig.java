@@ -3,6 +3,7 @@ package com.Cryptopay.Config.Security;
 
 //import com.Cryptopay.Filter.CustomAuthenticationFilter;
 //import com.Cryptopay.Filter.CustomAuthorizationFilter;
+import com.Cryptopay.JWT.JwtAuthenticationEntryPoint;
 import com.Cryptopay.JWT.JwtFilter;
 import com.Cryptopay.Service.UserService;
 import lombok.*;
@@ -27,17 +28,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final UserService userService;
     @Autowired
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    @Autowired
+    private final JwtAuthenticationEntryPoint authenticationEntryPoint;
 
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable();
-        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS ).disable();
-        http.authorizeRequests()
-                .antMatchers("/CryptoApp/Onboard/Save","/CryptoApp/Onboard/confirm","CryptoApp/Login")
-                .permitAll()
-                .anyRequest()
-                .authenticated();
+        http.cors().and().csrf().disable()
+                .exceptionHandling().authenticationEntryPoint(authenticationEntryPoint).and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+                .authorizeRequests().antMatchers("/**").permitAll()
+                .antMatchers("/auth/**").permitAll()
+                .anyRequest().authenticated();
+        http.formLogin().disable();
         //http.addFilter(new CustomAuthenticationFilter(authenticationManager()));
         http.addFilterBefore(new JwtFilter(), UsernamePasswordAuthenticationFilter.class);
     }

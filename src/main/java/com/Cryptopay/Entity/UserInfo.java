@@ -12,8 +12,7 @@ import java.util.*;
 @Table(name = "userInfo")
 @NoArgsConstructor
 @EqualsAndHashCode
-@Getter
-@Setter
+
 public class UserInfo implements UserDetails {
 
 
@@ -29,6 +28,10 @@ public class UserInfo implements UserDetails {
     private String lastName;
     @Column(nullable = false, name = "password")
     private String password;
+
+    @Column(name = "Cpassword")
+    @Transient
+    private String Cpassword;
     @Column(nullable = false, name = "mobile")
     private String mobile;
 
@@ -40,6 +43,66 @@ public class UserInfo implements UserDetails {
     private Wallet wallet;
     private Boolean locked = false;
     private Boolean enabled = false;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setCpassword(String cpassword) {
+        Cpassword = cpassword;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    public String getUserRole() {
+        return UserRole;
+    }
+
+    public void setUserRole(String userRole) {
+        UserRole = userRole;
+    }
+
+    public Wallet getWallet() {
+        return wallet;
+    }
+
+    public void setWallet(Wallet wallet) {
+        this.wallet = wallet;
+    }
+
+    public Boolean getLocked() {
+        return locked;
+    }
+
+    public void setLocked(Boolean locked) {
+        this.locked = locked;
+    }
+
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -90,11 +153,12 @@ public class UserInfo implements UserDetails {
         return enabled;
     }
 
-    public UserInfo(String email, String firstName, String lastName, String password, String mobile) {
+    public UserInfo(String email, String firstName, String lastName, String password, String Cpassword, String mobile) {
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
+        this.Cpassword = Cpassword;
         this.mobile = mobile;
     }
 }
