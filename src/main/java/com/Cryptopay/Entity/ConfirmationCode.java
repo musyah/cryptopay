@@ -11,12 +11,12 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Entity
 @Table(name = "token")
-public class ConfirmationToken {
+public class ConfirmationCode {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false)
-    private String token;
+    private String code;
     @Column(nullable = false)
     private LocalDateTime createdAt;
     @Column(nullable = false)
@@ -29,8 +29,8 @@ public class ConfirmationToken {
     )
     private UserInfo userInfo;
 
-    public ConfirmationToken(String token, LocalDateTime createdAt, LocalDateTime expiresAt, UserInfo userInfo) {
-        this.token = token;
+    public ConfirmationCode(String code, LocalDateTime createdAt, LocalDateTime expiresAt, UserInfo userInfo) {
+        this.code = code;
         this.createdAt = createdAt;
         this.expiresAt = expiresAt;
         this.userInfo = userInfo;

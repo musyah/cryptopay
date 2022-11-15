@@ -1,6 +1,5 @@
 package com.Cryptopay.Service;
 
-
 import com.Cryptopay.Entity.UserInfo;
 import com.Cryptopay.Repository.UserRepository;
 import lombok.*;
@@ -10,8 +9,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
@@ -23,15 +22,14 @@ public class UserService implements UserDetailsService {
     @Autowired
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-//    @Autowired
-//    private final EmailCheck emailChecker;
+    @Autowired
+    private final EmailCheck emailCheck;
     @Autowired
     private final SmsService sms;
     public List<UserInfo> getAllUserDetails() {
 
         return repository.findAll();
     }
-
 
     private final String USER_NOT_FOUND = "user with the email %s not found";
     @Override
@@ -47,11 +45,8 @@ public class UserService implements UserDetailsService {
 
 
     public String signUpUser(UserInfo userInfo){
-//            userExists = repository.findByEmail(userInfo.getEmail());
-//            if (userExists == null){
-//                throw new IllegalStateException("Wallet with the email already taken");
-//            }
 
+        emailCheck.emailCheck(userInfo.getEmail());
         String encodedPassword = bCryptPasswordEncoder.encode(userInfo.getPassword());
         userInfo.setPassword(encodedPassword);
        repository.save(userInfo);
@@ -59,6 +54,16 @@ public class UserService implements UserDetailsService {
         return sms.sendSms(userInfo);
     }
 
+    public String resendCode(UserInfo userInfo){
+
+        boolean verify = false;
+        if(verify == (repository.findByEmail(userInfo.getEmail()).getEnabled())){
+            return sms.sendSms(userInfo);
+        }
+        else {
+            throw  new IllegalStateException("Account enabled proceed to Login");
+        }
+    }
     public int enableUserInfo(String email) {
         return repository.enableuserInfo(email);
     }

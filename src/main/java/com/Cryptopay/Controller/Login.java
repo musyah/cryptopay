@@ -32,12 +32,10 @@ public class Login {
                 new UsernamePasswordAuthenticationToken(
                         authRequest.getEmail(),
                         authRequest.getPassword()));
-
         SecurityContextHolder.getContext().setAuthentication(authentication);
         org.springframework.security.core.userdetails.User user =
                 (org.springframework.security.core.userdetails.User) authentication.getPrincipal();
         return jwtUtil.createToken(authRequest);
-
         }
 //    public void generateToken(@RequestBody AuthRequest authRequest){
 //

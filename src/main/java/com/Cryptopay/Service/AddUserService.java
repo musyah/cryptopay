@@ -1,12 +1,10 @@
 package com.Cryptopay.Service;
 
-import com.Cryptopay.Entity.ConfirmationToken;
+import com.Cryptopay.Entity.ConfirmationCode;
 import com.Cryptopay.Entity.RegistrationRequest;
 import com.Cryptopay.Entity.UserInfo;
-import com.Cryptopay.Repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,12 +13,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 public class AddUserService {
 
-    private final UserService userService;
-    private final UserRepository repository;
     @Autowired
-    private final ConfirmationTokenService tokenService;
-
-
+    private final UserService userService;
+    @Autowired
+    private final ConfirmationCodeService codeService;
 
     public String register(RegistrationRequest request) {
         return userService.signUpUser(
@@ -32,24 +28,20 @@ public class AddUserService {
                         request.getCpassword(),
                         request.getMobile()
                 )
-
         );
-
     }
     @Transactional
-    public String confirmToken(String token){
-        ConfirmationToken confirmationToken = tokenService.getToken(token).orElseThrow(()->
+    public String confirmCode(String token){
+        ConfirmationCode confirmationCode = codeService.getToken(token).orElseThrow(()->
                 new IllegalStateException("Code not found"));
 
-        if(confirmationToken.getConfirmedAt()!=null){
+        if(confirmationCode.getConfirmedAt()!=null){
             throw new IllegalStateException("email already confirmed");
         }
-        tokenService.setConfirmedAt(token);
+        codeService.setConfirmedAt(token);
         userService.enableUserInfo(
-                confirmationToken.getUserInfo().getEmail());
+                confirmationCode.getUserInfo().getEmail());
         return "confirmed";
-
     }
-
 
 }

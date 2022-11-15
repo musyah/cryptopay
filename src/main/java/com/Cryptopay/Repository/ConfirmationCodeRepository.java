@@ -1,8 +1,6 @@
 package com.Cryptopay.Repository;
 
-import com.Cryptopay.Entity.ConfirmationToken;
-import com.Cryptopay.Entity.UserInfo;
-import org.hibernate.annotations.Where;
+import com.Cryptopay.Entity.ConfirmationCode;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -14,8 +12,8 @@ import java.util.*;
 
 @Repository
 @Transactional()
-public interface ConfirmationTokenRepository extends JpaRepository<ConfirmationToken, Long> {
-    Optional<ConfirmationToken> findByToken(String token);
+public interface ConfirmationCodeRepository extends JpaRepository<ConfirmationCode, Long> {
+    Optional<ConfirmationCode> findByToken(String token);
 
     @Transactional
     @Modifying

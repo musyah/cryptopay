@@ -1,8 +1,7 @@
 package com.Cryptopay.Config.Security;
 
 
-//import com.Cryptopay.Filter.CustomAuthenticationFilter;
-//import com.Cryptopay.Filter.CustomAuthorizationFilter;
+
 import com.Cryptopay.JWT.JwtAuthenticationEntryPoint;
 import com.Cryptopay.JWT.JwtFilter;
 import com.Cryptopay.Service.UserService;
@@ -18,7 +17,6 @@ import org.springframework.security.config.annotation.web.configuration.*;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-//import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @AllArgsConstructor
@@ -30,11 +28,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     @Autowired
     private final JwtAuthenticationEntryPoint authenticationEntryPoint;
-
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.cors().and().csrf().disable()
+        http.cors() .and().csrf().disable()
                 .exceptionHandling().authenticationEntryPoint(authenticationEntryPoint).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests().antMatchers("/**").permitAll()

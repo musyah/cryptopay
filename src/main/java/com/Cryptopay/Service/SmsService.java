@@ -2,9 +2,8 @@ package com.Cryptopay.Service;
 
 import com.Cryptopay.Config.TwilioConfig;
 import com.Cryptopay.Config.TwilioInitializer;
-import com.Cryptopay.Entity.ConfirmationToken;
+import com.Cryptopay.Entity.ConfirmationCode;
 import com.Cryptopay.Entity.UserInfo;
-import com.Cryptopay.Repository.ConfirmationTokenRepository;
 import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.rest.api.v2010.account.MessageCreator;
 import com.twilio.type.PhoneNumber;
@@ -21,32 +20,27 @@ public class SmsService {
     private final static Logger LOGGER = LoggerFactory.getLogger(TwilioInitializer.class);
     @Autowired
     private final TwilioConfig twilioConfig;
-    private final ConfirmationTokenService tokenService;
-    private final ConfirmationTokenRepository repository;
-
-
-
+    private final ConfirmationCodeService codeService;
     public String sendSms(UserInfo userInfo) {
 
         int randomNo=(int)(Math.random()*10000)+1000;
-        String token = String.valueOf(randomNo);
+        String code = String.valueOf(randomNo);
 
-        ConfirmationToken confirmationToken = new ConfirmationToken(
-                token,
+        ConfirmationCode confirmationCode = new ConfirmationCode(
+                code,
                 LocalDateTime.now(),
                 LocalDateTime.now().plusMinutes(10),
                 userInfo
         );
-        // send otp to phone
 
+        // send otp to phone
         PhoneNumber to = new PhoneNumber(userInfo.getMobile());
         PhoneNumber from = new PhoneNumber(twilioConfig.getTrialNumber());
-        String message = "Welcome to KryptoPesa your verification code is "+token;
+        String message = "Welcome to KryptoPesa your verification code is "+code;
         MessageCreator creator = Message.creator(to, from, message);
         creator.create();
 
-        tokenService.saveToken(confirmationToken);
-        return token;
+        codeService.saveToken(confirmationCode);
+        return code;
         }
-
     }

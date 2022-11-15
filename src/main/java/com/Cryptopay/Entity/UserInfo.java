@@ -14,8 +14,6 @@ import java.util.*;
 @EqualsAndHashCode
 
 public class UserInfo implements UserDetails {
-
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, unique = true, name = "Id")
@@ -28,13 +26,11 @@ public class UserInfo implements UserDetails {
     private String lastName;
     @Column(nullable = false, name = "password")
     private String password;
-
     @Column(name = "Cpassword")
     @Transient
     private String Cpassword;
     @Column(nullable = false, name = "mobile")
     private String mobile;
-
     private String UserRole = "user";
     @OneToOne
     @JoinColumn(
