@@ -20,7 +20,9 @@ public class SmsService {
     private final static Logger LOGGER = LoggerFactory.getLogger(TwilioInitializer.class);
     @Autowired
     private final TwilioConfig twilioConfig;
+    @Autowired
     private final ConfirmationCodeService codeService;
+
     public String sendSms(UserInfo userInfo) {
 
         int randomNo=(int)(Math.random()*10000)+1000;
@@ -32,7 +34,6 @@ public class SmsService {
                 LocalDateTime.now().plusMinutes(10),
                 userInfo
         );
-
         // send otp to phone
         PhoneNumber to = new PhoneNumber(userInfo.getMobile());
         PhoneNumber from = new PhoneNumber(twilioConfig.getTrialNumber());

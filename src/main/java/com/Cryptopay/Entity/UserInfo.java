@@ -32,118 +32,92 @@ public class UserInfo implements UserDetails {
     @Column(nullable = false, name = "mobile")
     private String mobile;
     private String UserRole = "user";
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             name = "Wallet"
     )
     private Wallet wallet;
     private Boolean locked = false;
     private Boolean enabled = false;
-
     public String getEmail() {
         return email;
     }
-
     public void setEmail(String email) {
         this.email = email;
     }
-
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
-
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
-
     public void setPassword(String password) {
         this.password = password;
     }
-
     public void setCpassword(String cpassword) {
         Cpassword = cpassword;
     }
-
     public void setMobile(String mobile) {
         this.mobile = mobile;
     }
-
     public String getUserRole() {
         return UserRole;
     }
-
     public void setUserRole(String userRole) {
         UserRole = userRole;
     }
-
     public Wallet getWallet() {
         return wallet;
     }
-
     public void setWallet(Wallet wallet) {
         this.wallet = wallet;
     }
-
     public Boolean getLocked() {
         return locked;
     }
-
     public void setLocked(Boolean locked) {
         this.locked = locked;
     }
-
     public Boolean getEnabled() {
         return enabled;
     }
-
     public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
     }
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         SimpleGrantedAuthority authority = new SimpleGrantedAuthority(UserRole);
         return Collections.singletonList(authority);
     }
-
-
     public String getFirstName() {
         return firstName;
     }
-
     public String getLastName() {
         return lastName;
     }
-
     public String getMobile() {
         return mobile;
     }
-
     @Override
     public String getUsername() {
         return email;
     }
-
     @Override
     public String getPassword() {
         return password;
     }
-
     @Override
     public boolean isAccountNonExpired() {
         return true;
     }
-
     @Override
     public boolean isAccountNonLocked() {
         return !locked;
     }
-
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
     }
-
     @Override
     public boolean isEnabled() {
         return enabled;

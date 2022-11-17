@@ -5,6 +5,7 @@ import com.Cryptopay.Entity.ConfirmationCode;
 import com.Cryptopay.Repository.ConfirmationCodeRepository;
 import com.Cryptopay.Repository.UserRepository;
 import lombok.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -14,23 +15,22 @@ import java.util.Optional;
 @AllArgsConstructor
 public class ConfirmationCodeService {
 
-    private final UserRepository userRepository;
-    private final ConfirmationCodeRepository confirmationCodeRepository;
-
+    @Autowired
     private final ConfirmationCodeRepository repository;
+    @Autowired
     private final TwilioConfig twilioConfig;
 
-    public void saveToken(ConfirmationCode token){
-        repository.save(token);
+    public void saveToken(ConfirmationCode code){
+        repository.save(code);
     }
 
-    public Optional<ConfirmationCode> getToken(String token) {
-        return repository.findByToken(token);
+    public Optional<ConfirmationCode> getCode(String code) {
+        return repository.findByCode(code);
     }
 
-    public int setConfirmedAt(String token) {
+    public int setConfirmedAt(String code) {
         return repository.updateConfirmedAt(
-                token, LocalDateTime.now());
+                code, LocalDateTime.now());
     }
 
 //    public String resend(String mobile) {

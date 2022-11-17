@@ -23,7 +23,7 @@ public class Transactions {
     private Double Amount;
     @Column(nullable = false, name = "pin")
     private String pin;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             name = "Wallet_info"
     )

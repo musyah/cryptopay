@@ -22,7 +22,7 @@ public class ConfirmationCode {
     @Column(nullable = false)
     private LocalDateTime expiresAt;
     private LocalDateTime confirmedAt;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(
             nullable = false,
             name = "userId"

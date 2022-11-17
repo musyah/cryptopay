@@ -11,18 +11,23 @@ import java.util.*;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/CryptoApp/Onboard")
-@CrossOrigin
+//@CrossOrigin
 public class UserController {
     @Autowired
-    private final UserService userService;
+    private UserService userService;
     @Autowired
     private final AddUserService addUser;
     @Autowired
     private final EmailCheck emailChecker;
 
-    @GetMapping("/user")
+    @GetMapping("/users")
     public List<UserInfo> getUser() {
         return userService.getAllUserDetails();
+    }
+
+    @GetMapping("/user")
+    public UserInfo getUserInfo(String email) {
+        return userService.getUserInfo(email);
     }
 
     @GetMapping("/Check")
@@ -30,8 +35,8 @@ public class UserController {
         return emailChecker.emailCheck(email);
     }
    @PostMapping("/Resend")
-    public String getToken(@RequestBody UserInfo userInfo){
-        return userService.resendCode(userInfo);
+    public String getCode(String email){
+        return userService.resendCode(email);
     }
     @PostMapping("/Save")
     public String Add(@RequestBody RegistrationRequest request) {

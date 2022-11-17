@@ -31,14 +31,14 @@ public class AddUserService {
         );
     }
     @Transactional
-    public String confirmCode(String token){
-        ConfirmationCode confirmationCode = codeService.getToken(token).orElseThrow(()->
+    public String confirmCode(String code){
+        ConfirmationCode confirmationCode = codeService.getCode(code).orElseThrow(()->
                 new IllegalStateException("Code not found"));
 
         if(confirmationCode.getConfirmedAt()!=null){
             throw new IllegalStateException("email already confirmed");
         }
-        codeService.setConfirmedAt(token);
+        codeService.setConfirmedAt(code);
         userService.enableUserInfo(
                 confirmationCode.getUserInfo().getEmail());
         return "confirmed";

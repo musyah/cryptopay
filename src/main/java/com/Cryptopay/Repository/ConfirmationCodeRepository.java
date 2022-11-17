@@ -13,14 +13,14 @@ import java.util.*;
 @Repository
 @Transactional()
 public interface ConfirmationCodeRepository extends JpaRepository<ConfirmationCode, Long> {
-    Optional<ConfirmationCode> findByToken(String token);
+    Optional<ConfirmationCode> findByCode(String code);
 
     @Transactional
     @Modifying
-    @Query("UPDATE ConfirmationToken c " +
+    @Query("UPDATE ConfirmationCode c " +
             "SET c.confirmedAt = ?2 " +
-            "WHERE c.token = ?1")
-    int updateConfirmedAt(String token,
+            "WHERE c.code = ?1")
+    int updateConfirmedAt(String code,
                           LocalDateTime confirmedAt);
 
 //

@@ -18,7 +18,7 @@ public class Wallet {
     private Long Id;
     @Column(nullable = false, unique = true, name = "WalletId")
     private Integer WalletId;
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             nullable = false,
             name = "User_Deets"

@@ -30,14 +30,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final JwtAuthenticationEntryPoint authenticationEntryPoint;
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.cors() .and().csrf().disable()
+        http.cors().disable();
+        http.csrf().disable()
                 .exceptionHandling().authenticationEntryPoint(authenticationEntryPoint).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests().antMatchers("/**").permitAll()
                 .antMatchers("/auth/**").permitAll()
                 .anyRequest().authenticated();
         http.formLogin().disable();
-        //http.addFilter(new CustomAuthenticationFilter(authenticationManager()));
         http.addFilterBefore(new JwtFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 
@@ -53,7 +53,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         provider.setUserDetailsService(userService);
         return provider;
     }
-
     @Bean(name = BeanIds.AUTHENTICATION_MANAGER)
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
