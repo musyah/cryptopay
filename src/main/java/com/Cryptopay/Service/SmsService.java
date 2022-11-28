@@ -25,7 +25,7 @@ public class SmsService {
 
     public String sendSms(UserInfo userInfo) {
 
-        int randomNo=(int)(Math.random()*10000)+1000;
+        int randomNo = (int) (Math.random() * 10000) + 1000;
         String code = String.valueOf(randomNo);
 
         ConfirmationCode confirmationCode = new ConfirmationCode(
@@ -34,14 +34,16 @@ public class SmsService {
                 LocalDateTime.now().plusMinutes(10),
                 userInfo
         );
-        // send otp to phone
-        PhoneNumber to = new PhoneNumber(userInfo.getMobile());
-        PhoneNumber from = new PhoneNumber(twilioConfig.getTrialNumber());
-        String message = "Welcome to KryptoPesa your verification code is "+code;
-        MessageCreator creator = Message.creator(to, from, message);
-        creator.create();
-
-        codeService.saveToken(confirmationCode);
-        return code;
+        try {
+            PhoneNumber to = new PhoneNumber(userInfo.getMobile());
+            PhoneNumber from = new PhoneNumber(twilioConfig.getTrialNumber());
+            String message = "Welcome " + userInfo.getFirstName() + " to KryptoPesa your verification code is " + code;
+            MessageCreator creator = Message.creator(to, from, message);
+            creator.create();
+            codeService.saveCode(confirmationCode);
+            return code;
+        } catch (Exception e) {
+            throw new IllegalStateException("Message App in not working properly");
         }
     }
+}

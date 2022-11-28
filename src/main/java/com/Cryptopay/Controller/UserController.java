@@ -1,11 +1,13 @@
 package com.Cryptopay.Controller;
 
-import com.Cryptopay.Entity.RegistrationRequest;
+import com.Cryptopay.dtos.RegistrationRequest;
 import com.Cryptopay.Entity.UserInfo;
 import com.Cryptopay.Service.*;
 import lombok.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.*;
 
 @RestController
@@ -21,7 +23,7 @@ public class UserController {
     private final EmailCheck emailChecker;
 
     @GetMapping("/users")
-    public List<UserInfo> getUser() {
+    public List<UserInfo> getUsers() {
         return userService.getAllUserDetails();
     }
 
@@ -29,13 +31,12 @@ public class UserController {
     public UserInfo getUserInfo(String email) {
         return userService.getUserInfo(email);
     }
-
-    @GetMapping("/Check")
-    public String check(String email) {
-        return emailChecker.emailCheck(email);
+    @GetMapping("/Check/{email}")
+    public void check(@PathVariable String email) {
+        emailChecker.emailCheck(email);
     }
    @PostMapping("/Resend")
-    public String getCode(String email){
+    public String getCode(@RequestBody String email){
         return userService.resendCode(email);
     }
     @PostMapping("/Save")

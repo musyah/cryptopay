@@ -1,22 +1,21 @@
-//package com.Cryptopay.Config;
-//
-//import lombok.*;
-//import org.springframework.boot.context.properties.ConfigurationProperties;
-//import org.springframework.context.annotation.Configuration;
-//
-//@Getter
-//@Setter
-//@Configuration
-//@ConfigurationProperties(prefix = "mpesa.daraja")
-//public class MpesaConfig {
-//    private String consumerKey;
-//    private String consumerSecret;
-//    private String grantType;
-//    private String oauthEndpoint;
-//
-//    @Override
-//    public String toString(){
-//        return String.format("{consumerKey='%s',consumerSecret='%s',grantType='%s',oauthEndpoint='%s',}",
-//                consumerKey, consumerSecret, grantType, oauthEndpoint);
-//    }
-//}
+package com.Cryptopay.Config;
+
+import lombok.*;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
+
+@Getter
+@Setter
+@Configuration
+@ConfigurationProperties(prefix = "mpesa.daraja")
+public class MpesaConfig {
+    private String consumerKey;
+    private String consumerSecret;
+    private String grantType;
+    private String oauthEndpoint;
+    @Override
+    public String toString(){
+        return String.format("{consumerKey='%s',consumerSecret='%s',grantType='%s',oauthEndpoint='%s',}",
+                consumerKey, consumerSecret, grantType, oauthEndpoint);
+    }
+}

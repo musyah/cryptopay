@@ -1,4 +1,4 @@
-package com.Cryptopay.Entity;
+package com.Cryptopay.dtos;
 
 import lombok.*;
 

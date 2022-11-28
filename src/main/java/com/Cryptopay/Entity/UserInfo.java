@@ -32,11 +32,11 @@ public class UserInfo implements UserDetails {
     @Column(nullable = false, name = "mobile")
     private String mobile;
     private String UserRole = "user";
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(
-            name = "Wallet"
-    )
-    private Wallet wallet;
+//    @OneToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(
+//            name = "Wallet"
+//    )
+//    private Wallet wallet;
     private Boolean locked = false;
     private Boolean enabled = false;
     public String getEmail() {
@@ -66,12 +66,12 @@ public class UserInfo implements UserDetails {
     public void setUserRole(String userRole) {
         UserRole = userRole;
     }
-    public Wallet getWallet() {
-        return wallet;
-    }
-    public void setWallet(Wallet wallet) {
-        this.wallet = wallet;
-    }
+//    public Wallet getWallet() {
+//        return wallet;
+//    }
+//    public void setWallet(Wallet wallet) {
+//        this.wallet = wallet;
+//    }
     public Boolean getLocked() {
         return locked;
     }
@@ -123,12 +123,22 @@ public class UserInfo implements UserDetails {
         return enabled;
     }
 
-    public UserInfo(String email, String firstName, String lastName, String password, String Cpassword, String mobile) {
+//    public UserInfo(String email, String firstName, String lastName, String password, String cpassword, String mobile, Wallet wallet) {
+//        this.email = email;
+//        this.firstName = firstName;
+//        this.lastName = lastName;
+//        this.password = password;
+//        Cpassword = cpassword;
+//        this.mobile = mobile;
+//        this.wallet = wallet;
+//    }
+
+    public UserInfo(String email, String firstName, String lastName, String password, String cpassword, String mobile) {
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
-        this.Cpassword = Cpassword;
+        Cpassword = cpassword;
         this.mobile = mobile;
     }
 }

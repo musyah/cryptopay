@@ -1,6 +1,8 @@
 package com.Cryptopay.Repository;
 
 import com.Cryptopay.Entity.UserInfo;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -15,13 +17,8 @@ import java.util.Optional;
 @Transactional
 public interface  UserRepository extends JpaRepository<UserInfo, Long> {
 
-//     UserInfo findByEmail(String email);
-
-     @Query
-             (
-                     "SELECT u FROM UserInfo u WHERE u.email = ?1"
-             )
-     UserInfo findByEmail(@Param("email") String email);
+     @Query("SELECT u FROM UserInfo u WHERE u.email = ?1")
+     UserInfo findByEmail(String email);
 
      @Transactional
      @Modifying
@@ -30,9 +27,7 @@ public interface  UserRepository extends JpaRepository<UserInfo, Long> {
                      "SET u.enabled = TRUE WHERE u.email = ?1")
      int enableuserInfo(String email);
 
-     @Query
-             (
-                     "SELECT u FROM UserInfo u WHERE u.email = ?1"
-             )
-     List<UserInfo> findByMail(String email);
+     @Query("SELECT u FROM UserInfo u WHERE u.email = ?1")
+     Optional<UserInfo> findByMail(String email);
+
 }

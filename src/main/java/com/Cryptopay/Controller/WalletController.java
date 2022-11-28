@@ -12,13 +12,13 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping(path = "CryptoApp/Wallet")
 public class WalletController {
-    @Autowired
-    private WalletService walletService;
+   @Autowired
+   private WalletService walletService;
 
-//    @GetMapping("/wallet")
-//    public List<Wallet> getUsers(){
-//        return walletService.getWallet();
-//    }
+    @GetMapping("/wallet")
+    public List<Wallet> getUsers(){
+        return walletService.getWallet();
+    }
 
     @PostMapping("/setup")
     public String createWallet(@RequestBody Wallet wallet){

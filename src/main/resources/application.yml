@@ -10,4 +10,3 @@ mpesa:
     grant-type: client_credentials
     oauth-endpoint: https://sandbox.safaricom.co.ke/oauth/v1/generate
 
-

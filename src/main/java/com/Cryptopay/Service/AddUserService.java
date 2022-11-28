@@ -1,7 +1,7 @@
 package com.Cryptopay.Service;
 
 import com.Cryptopay.Entity.ConfirmationCode;
-import com.Cryptopay.Entity.RegistrationRequest;
+import com.Cryptopay.dtos.RegistrationRequest;
 import com.Cryptopay.Entity.UserInfo;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,5 +43,6 @@ public class AddUserService {
                 confirmationCode.getUserInfo().getEmail());
         return "confirmed";
     }
+
 
 }
