@@ -67,7 +67,7 @@ public class SmsService {
             MessageCreator creator = Message.creator(to, from, message);
             creator.create();
             codeService.saveCode(confirmationCode);
-            return code;
+            return "Verification code sent";
 //        } catch (Exception e) {
 //            throw new IllegalStateException("Message App in not working properly");
 //        }

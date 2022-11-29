@@ -5,7 +5,6 @@ import lombok.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class RegistrationResponse {
-    private String message;
-
+public class VerificationResponse {
+    private String Confirmation;
 }

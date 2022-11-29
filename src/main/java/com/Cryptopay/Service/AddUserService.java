@@ -41,7 +41,7 @@ public class AddUserService {
         codeService.setConfirmedAt(code);
         userService.enableUserInfo(
                 confirmationCode.getUserInfo().getEmail());
-        return "confirmed";
+        return "Account enabled proceed to Log in";
     }
 
 

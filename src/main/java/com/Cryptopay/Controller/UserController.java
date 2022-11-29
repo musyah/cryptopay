@@ -4,6 +4,7 @@ import com.Cryptopay.Entity.UserInfo;
 import com.Cryptopay.Service.*;
 import com.Cryptopay.dtos.RegistrationRequest;
 import com.Cryptopay.dtos.RegistrationResponse;
+import com.Cryptopay.dtos.VerificationResponse;
 import lombok.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -51,7 +52,10 @@ public class UserController {
 
     }
     @GetMapping("/confirm")
-    public String register(@RequestParam("code") String code){
-        return addUser.confirmCode(code);
+    public ResponseEntity<?> register(@RequestParam("code") String code){
+
+        String Confirmation = addUser.confirmCode(code);
+        VerificationResponse response = new VerificationResponse(Confirmation);
+        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
     }
 }
