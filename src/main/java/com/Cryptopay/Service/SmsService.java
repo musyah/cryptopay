@@ -56,7 +56,7 @@ public class SmsService {
                 userInfo,
                 userInfo.getFirstName()+value,
                 pin,
-                0.07
+                0.0007
         );
         walletRepo.save(wallet);
         try {

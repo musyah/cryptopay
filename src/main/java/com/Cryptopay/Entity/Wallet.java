@@ -36,5 +36,4 @@ public class Wallet{
         this.pin = pin;
         this.balance = balance;
     }
-
 }

@@ -24,14 +24,15 @@ public class Transactions {
     private LocalDateTime TransactedAt;
     @Column(nullable = false)
     private String subject;
-    private BigDecimal Amount;
+    private double Amount;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             name = "Wallet_info"
     )
     private Wallet wallet;
 
-    public Transactions(LocalDateTime transactedAt, String subject, BigDecimal amount, Wallet wallet) {
+    public Transactions(String transactionNo, LocalDateTime transactedAt, String subject, double amount, Wallet wallet) {
+        TransactionNo = transactionNo;
         TransactedAt = transactedAt;
         this.subject = subject;
         Amount = amount;

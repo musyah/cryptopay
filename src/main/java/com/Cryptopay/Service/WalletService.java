@@ -39,10 +39,17 @@ public class WalletService {
         repo.save(wallet);
         return ("Wallet SET UP Successfully");
     }
+    public int TransactionIdGenerator(){
+        Random rand = new Random();
+        int maxValues= 99999999;
+        return rand.nextInt(maxValues);
+    };
     @PostConstruct
     public void SendCoins(Wallet wallet,TransactionDto Send) throws Exception {
 
+        String trId = String.valueOf(TransactionIdGenerator());
         Transactions transactions = new Transactions(
+                "SendId: "+trId,
                 LocalDateTime.now(),
                 "to: "+Send.getSubject(),
                 Send.getAmount(),
@@ -51,16 +58,18 @@ public class WalletService {
         String Address = Send.getSubject();
         if (repo.findByAddress(Address)!=null) {
             try {
-                BigDecimal prevBalance = wallet.getBalance();
-                BigDecimal newBalance = prevBalance.subtract(Send.getAmount());
+                double prevBalance = wallet.getBalance();
+                double newBalance = prevBalance-(Send.getAmount());
                 wallet.setBalance(newBalance);
                 LOGGER.info("Sending Amount ", Send.getAmount(), " to ", transactions.getSubject());
                 LOGGER.info("Sending....");
                 transactionRepo.save(transactions);
 
                 String from=wallet.getAddress();
-                BigDecimal AmountReceived = Send.getAmount();
+                String tId = String.valueOf(TransactionIdGenerator());
+                double AmountReceived = Send.getAmount();
                 Transactions transaction = new Transactions(
+                        "ReceiverId: "+tId,
                         LocalDateTime.now(),
                         "from: "+from,
                         AmountReceived,
@@ -68,8 +77,8 @@ public class WalletService {
                 );
 
                 try {
-                    BigDecimal PrevBalance = repo.findByAddress(Address).getBalance();
-                    BigDecimal NewBalance = PrevBalance.add(Send.getAmount());
+                    double PrevBalance = repo.findByAddress(Address).getBalance();
+                    double NewBalance = PrevBalance+(Send.getAmount());
                     repo.findByAddress(Address).setBalance(NewBalance);
                     LOGGER.info("Received Amount ", Send.getAmount(), " from ", Send.getSubject());
                     LOGGER.info("Sending....");
