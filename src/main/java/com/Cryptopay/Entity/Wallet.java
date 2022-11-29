@@ -21,24 +21,20 @@ public class Wallet{
             name = "User_Deets"
     )
     private UserInfo userInfo;
-    @Column(nullable = false,columnDefinition ="mediumtext")
+    @Column(nullable = false,unique = true)
     private String address;
 
-    @Column(columnDefinition ="mediumtext")
-    private String fileName;
-
     @Column(columnDefinition="mediumtext")
-    private String password;
+    private String pin;
 
-    @Column(columnDefinition="mediumtext")
-    private String passwordKey;
-
-//    @DecimalMin("0")
     @Column(precision = 20, scale = 8)
-    private BigDecimal balance;
+    private double balance;
 
-    @Enumerated(EnumType.STRING)
-    private CoinType coinType;
-
+    public Wallet(UserInfo userInfo, String address, String pin, double balance) {
+        this.userInfo = userInfo;
+        this.address = address;
+        this.pin = pin;
+        this.balance = balance;
+    }
 
 }

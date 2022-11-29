@@ -9,6 +9,5 @@ import java.math.BigDecimal;
 @EqualsAndHashCode
 public class TransactionDto {
     private final String subject;
-    private final BigDecimal AmountSent;
-    private final BigDecimal AmountReceived;
+    private final BigDecimal Amount;
 }

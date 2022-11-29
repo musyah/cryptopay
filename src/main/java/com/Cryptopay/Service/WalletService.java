@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -38,26 +39,27 @@ public class WalletService {
         repo.save(wallet);
         return ("Wallet SET UP Successfully");
     }
+    @PostConstruct
     public void SendCoins(Wallet wallet,TransactionDto Send) throws Exception {
 
         Transactions transactions = new Transactions(
                 LocalDateTime.now(),
                 "to: "+Send.getSubject(),
-                Send.getAmountSent(),
+                Send.getAmount(),
                 wallet
         );
         String Address = Send.getSubject();
         if (repo.findByAddress(Address)!=null) {
             try {
                 BigDecimal prevBalance = wallet.getBalance();
-                BigDecimal newBalance = prevBalance.subtract(Send.getAmountSent());
+                BigDecimal newBalance = prevBalance.subtract(Send.getAmount());
                 wallet.setBalance(newBalance);
-                LOGGER.info("Sending Amount ", Send.getAmountSent(), " to ", transactions.getSubject());
+                LOGGER.info("Sending Amount ", Send.getAmount(), " to ", transactions.getSubject());
                 LOGGER.info("Sending....");
                 transactionRepo.save(transactions);
 
                 String from=wallet.getAddress();
-                BigDecimal AmountReceived = Send.getAmountSent();
+                BigDecimal AmountReceived = Send.getAmount();
                 Transactions transaction = new Transactions(
                         LocalDateTime.now(),
                         "from: "+from,
@@ -67,9 +69,9 @@ public class WalletService {
 
                 try {
                     BigDecimal PrevBalance = repo.findByAddress(Address).getBalance();
-                    BigDecimal NewBalance = PrevBalance.add(Send.getAmountSent());
+                    BigDecimal NewBalance = PrevBalance.add(Send.getAmount());
                     repo.findByAddress(Address).setBalance(NewBalance);
-                    LOGGER.info("Received Amount ", Send.getAmountSent(), " from ", Send.getSubject());
+                    LOGGER.info("Received Amount ", Send.getAmount(), " from ", Send.getSubject());
                     LOGGER.info("Sending....");
                     transactionRepo.save(transaction);
 
@@ -86,11 +88,6 @@ public class WalletService {
 
 
     }
-    public void ReceiveCoins(Wallet wallet,TransactionDto Send) throws Exception {
-
-
-        }
-
 
 //    @PostConstruct
 //    public void start() {
