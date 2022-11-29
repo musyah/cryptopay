@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
+@CrossOrigin(origins = "*")
 @RestController
 @AllArgsConstructor
 @RequestMapping("/CryptoApp/Onboard")
-@CrossOrigin
 public class UserController {
     @Autowired
     private UserService userService;
@@ -42,7 +42,6 @@ public class UserController {
     public String Add(@RequestBody RegistrationRequest Request) {
         return addUser.register(Request);
     }
-
     @GetMapping("/confirm")
     public String register(@RequestParam("code") String code){
         return addUser.confirmCode(code);
