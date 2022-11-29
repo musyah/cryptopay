@@ -1,9 +1,9 @@
 package com.Cryptopay.Service;
 
 import com.Cryptopay.Entity.ConfirmationCode;
-import com.Cryptopay.dtos.RegistrationRequest;
 import com.Cryptopay.Entity.UserInfo;
-import lombok.AllArgsConstructor;
+import com.Cryptopay.dtos.RegistrationRequest;
+import lombok.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

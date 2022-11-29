@@ -1,11 +1,10 @@
 package com.Cryptopay.Controller;
 
-import com.Cryptopay.dtos.RegistrationRequest;
 import com.Cryptopay.Entity.UserInfo;
 import com.Cryptopay.Service.*;
+import com.Cryptopay.dtos.RegistrationRequest;
 import lombok.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -13,7 +12,7 @@ import java.util.*;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/CryptoApp/Onboard")
-//@CrossOrigin
+@CrossOrigin(origins = "http://localhost:4200")
 public class UserController {
     @Autowired
     private UserService userService;
@@ -40,8 +39,8 @@ public class UserController {
         return userService.resendCode(email);
     }
     @PostMapping("/Save")
-    public String Add(@RequestBody RegistrationRequest request) {
-        return addUser.register(request);
+    public String Add(@RequestBody RegistrationRequest Request) {
+        return addUser.register(Request);
     }
 
     @GetMapping("/confirm")

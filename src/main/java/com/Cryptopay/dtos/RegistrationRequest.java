@@ -1,7 +1,6 @@
 package com.Cryptopay.dtos;
 
 import lombok.*;
-
 @Getter
 @AllArgsConstructor
 @EqualsAndHashCode

@@ -42,7 +42,7 @@ public class WalletService {
 
         Transactions transactions = new Transactions(
                 LocalDateTime.now(),
-                Send.getSubject(),
+                "to: "+Send.getSubject(),
                 Send.getAmountSent(),
                 wallet
         );
@@ -60,7 +60,7 @@ public class WalletService {
                 BigDecimal AmountReceived = Send.getAmountSent();
                 Transactions transaction = new Transactions(
                         LocalDateTime.now(),
-                        from,
+                        "from: "+from,
                         AmountReceived,
                         repo.findByAddress(Address).getClass().newInstance()
                 );
