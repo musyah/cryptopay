@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
-@CrossOrigin(origins = "*")
+@CrossOrigin
 @RestController
 @AllArgsConstructor
 @RequestMapping("/CryptoApp/Onboard")
