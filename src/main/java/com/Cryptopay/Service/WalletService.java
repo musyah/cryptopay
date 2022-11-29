@@ -3,6 +3,7 @@ package com.Cryptopay.Service;
 import com.Cryptopay.Entity.Transactions;
 import com.Cryptopay.Entity.Wallet;
 import com.Cryptopay.Repository.TransactionRepository;
+import com.Cryptopay.Repository.UserRepository;
 import com.Cryptopay.Repository.WalletRepository;
 import com.Cryptopay.dtos.TransactionDto;
 import lombok.*;
@@ -24,6 +25,8 @@ public class WalletService {
     private WalletRepository repo;
     @Autowired
     private final TransactionRepository transactionRepo;
+    @Autowired
+    private final UserRepository userRepo;
     private final static Logger LOGGER = LoggerFactory.getLogger(WalletService.class);
 
 
@@ -35,17 +38,17 @@ public class WalletService {
         return "Succesful";
     }
 
-    public String save(Wallet wallet) {
-        repo.save(wallet);
-        return ("Wallet SET UP Successfully");
+    public String see(String email) {
+        List UserWallet = (List) userRepo.findByEmail(email).getWallet();
+        return UserWallet.toString();
     }
     public int TransactionIdGenerator(){
         Random rand = new Random();
         int maxValues= 99999999;
         return rand.nextInt(maxValues);
     };
-    @PostConstruct
-    public void SendCoins(Wallet wallet,TransactionDto Send) throws Exception {
+//    @PostConstruct
+    public void SendCoins(Wallet wallet,TransactionDto Send) {
 
         String trId = String.valueOf(TransactionIdGenerator());
         Transactions transactions = new Transactions(
@@ -81,14 +84,14 @@ public class WalletService {
                     double NewBalance = PrevBalance+(Send.getAmount());
                     repo.findByAddress(Address).setBalance(NewBalance);
                     LOGGER.info("Received Amount ", Send.getAmount(), " from ", Send.getSubject());
-                    LOGGER.info("Sending....");
+                    LOGGER.info("Receiving....");
                     transactionRepo.save(transaction);
 
                 } catch (Exception e) {
                     throw new Exception("Balance not Updated");
                 }
             } catch (Exception e) {
-                throw new Exception("insufficient funds");
+                throw new IllegalStateException("insufficient funds");
             }
         }
         else {

@@ -65,7 +65,7 @@ public class UserService implements UserDetailsService {
 
     public String signUpUser(UserInfo userInfo){
 
-        emailCheck.emailCheck(userInfo.getEmail());
+//        emailCheck.emailCheck(userInfo.getEmail());
         String encodedPassword = bCryptPasswordEncoder.encode(userInfo.getPassword());
         userInfo.setPassword(encodedPassword);
        repository.save(userInfo);

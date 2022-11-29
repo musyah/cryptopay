@@ -26,7 +26,6 @@ public interface  UserRepository extends JpaRepository<UserInfo, Long> {
              ("UPDATE UserInfo u " +
                      "SET u.enabled = TRUE WHERE u.email = ?1")
      int enableuserInfo(String email);
-
      @Query("SELECT u FROM UserInfo u WHERE u.email = ?1")
      Optional<UserInfo> findByMail(String email);
 

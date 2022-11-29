@@ -3,6 +3,7 @@ package com.Cryptopay.Controller;
 
 import com.Cryptopay.JWT.JwtUtil;
 import com.Cryptopay.dtos.AuthRequest;
+import com.Cryptopay.dtos.AuthResponse;
 import lombok.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,8 +13,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletResponse;
 
 @RestController
 @AllArgsConstructor
@@ -25,7 +24,7 @@ public class Login {
     private final JwtUtil jwtUtil;
 
     @PostMapping("/login")
-    public ResponseEntity userLogin(@RequestBody AuthRequest authRequest){
+    public ResponseEntity<?> userLogin(@RequestBody AuthRequest authRequest){
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         authRequest.getEmail(),
@@ -33,7 +32,8 @@ public class Login {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         org.springframework.security.core.userdetails.User user =
                 (org.springframework.security.core.userdetails.User) authentication.getPrincipal();
-        Object Token = jwtUtil.createToken(authRequest);
-        return ResponseEntity.ok().body(Token);
+        String token = jwtUtil.createToken(authRequest);
+        AuthResponse response = new AuthResponse(token);
+        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
         }
 }

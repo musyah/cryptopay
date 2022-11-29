@@ -24,7 +24,7 @@ public class Wallet{
     @Column(nullable = false,unique = true)
     private String address;
 
-    @Column(columnDefinition="mediumtext")
+    @Column
     private String pin;
 
     @Column(precision = 20, scale = 8)

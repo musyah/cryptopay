@@ -59,17 +59,17 @@ public class SmsService {
                 0.0007
         );
         walletRepo.save(wallet);
-        try {
+//        try {
             PhoneNumber to = new PhoneNumber(userInfo.getMobile());
             PhoneNumber from = new PhoneNumber(twilioConfig.getTrialNumber());
             String message = "Welcome " + userInfo.getFirstName() + " to KryptoPesa your verification code is " + code +
-                    "your wallet address is ("+wallet.getAddress()+") with the pin: "+pin;
+                    ". Your wallet address is ("+wallet.getAddress()+") with the pin: "+pin;
             MessageCreator creator = Message.creator(to, from, message);
             creator.create();
             codeService.saveCode(confirmationCode);
             return code;
-        } catch (Exception e) {
-            throw new IllegalStateException("Message App in not working properly");
-        }
+//        } catch (Exception e) {
+//            throw new IllegalStateException("Message App in not working properly");
+//        }
     }
 }

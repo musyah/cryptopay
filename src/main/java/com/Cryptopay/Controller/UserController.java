@@ -3,8 +3,11 @@ package com.Cryptopay.Controller;
 import com.Cryptopay.Entity.UserInfo;
 import com.Cryptopay.Service.*;
 import com.Cryptopay.dtos.RegistrationRequest;
+import com.Cryptopay.dtos.RegistrationResponse;
 import lombok.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -39,8 +42,13 @@ public class UserController {
         return userService.resendCode(email);
     }
     @PostMapping("/Save")
-    public String Add(@RequestBody RegistrationRequest Request) {
-        return addUser.register(Request);
+    public ResponseEntity<?> Add(@RequestBody RegistrationRequest Request) {
+//        addUser.register(Request);
+        String message = addUser.register(Request);
+        RegistrationResponse response = new RegistrationResponse(message);
+
+        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+
     }
     @GetMapping("/confirm")
     public String register(@RequestParam("code") String code){
