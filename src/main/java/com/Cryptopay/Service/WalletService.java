@@ -38,10 +38,10 @@ public class WalletService {
         return "Succesful";
     }
 
-    public String see(String email) {
-        List UserWallet = (List) userRepo.findByEmail(email).getWallet();
-        return UserWallet.toString();
-    }
+//    public String see(String email) {
+//        List UserWallet = (List) userRepo.findByEmail(email).getWallet();
+//        return UserWallet.toString();
+//    }
     public int TransactionIdGenerator(){
         Random rand = new Random();
         int maxValues= 99999999;
