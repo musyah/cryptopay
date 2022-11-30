@@ -59,7 +59,7 @@ public class SmsService {
                 0.0007
         );
         walletRepo.save(wallet);
-//        try {
+        try {
             PhoneNumber to = new PhoneNumber(userInfo.getMobile());
             PhoneNumber from = new PhoneNumber(twilioConfig.getTrialNumber());
             String message = "Welcome " + userInfo.getFirstName() + " to KryptoPesa your verification code is " + code +
@@ -68,8 +68,8 @@ public class SmsService {
             creator.create();
             codeService.saveCode(confirmationCode);
             return "Verification code sent";
-//        } catch (Exception e) {
-//            throw new IllegalStateException("Message App in not working properly");
-//        }
+        } catch (Exception e) {
+            throw new IllegalStateException("Phone number not present.....Message App in not working properly");
+        }
     }
 }

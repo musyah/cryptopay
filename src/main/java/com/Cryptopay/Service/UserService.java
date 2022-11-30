@@ -5,6 +5,7 @@ import com.Cryptopay.Entity.ConfirmationCode;
 import com.Cryptopay.Entity.UserInfo;
 import com.Cryptopay.Repository.ConfirmationCodeRepository;
 import com.Cryptopay.Repository.UserRepository;
+import com.Cryptopay.dtos.ResetDto;
 import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.rest.api.v2010.account.MessageCreator;
 import com.twilio.type.PhoneNumber;
@@ -73,12 +74,12 @@ public class UserService implements UserDetailsService {
         return sms.sendSms(userInfo);
     }
 
-    public String resendCode(String email){
+    public String resendCode(ResetDto reset){
 
-//        boolean verify = false;
-//        if(verify == (repository.findByEmail(email).getEnabled())){
+        boolean verify = false;
+        if(verify == (repository.findByEmail(reset.getEmail()).getEnabled())){
 
-       // UserInfo userInfo = getUserInfo(email);
+        UserInfo userInfo = getUserInfo(reset.getEmail());
             int randomNo=(int)(Math.random()*10000)+1000;
             String code = String.valueOf(randomNo);
 
@@ -86,10 +87,10 @@ public class UserService implements UserDetailsService {
                     code,
                     LocalDateTime.now(),
                     LocalDateTime.now().plusMinutes(10),
-                    new UserInfo()
+                    userInfo
             );
 
-        String Recipient = (repository.findByEmail(email).getMobile());
+        String Recipient = (userInfo.getMobile());
 
             // send otp to phone
             PhoneNumber to = new PhoneNumber(Recipient);
@@ -99,14 +100,15 @@ public class UserService implements UserDetailsService {
             creator.create();
 
             codeService.saveCode(confirmationCode);
-            return code;
-//        }
-//        else {
-//            throw  new IllegalStateException("Account enabled proceed to Login");
-//        }
+            return "Resend Code Successful";
+        }
+        else {
+            throw  new IllegalStateException("Account enabled proceed to Login");
+        }
+
     }
-    public void resetEmail(String email){
-        String link = "http://localhost:8080/api/v1/registration/confirm?code=";
+    public void reset(String email){
+        String link = "http://linktoReset";
         emailSender.send(
                 email,
                 buildEmail(repository.findByEmail(email).getFirstName(), link));

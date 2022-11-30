@@ -1,10 +1,9 @@
 package com.Cryptopay.Controller;
 
 import com.Cryptopay.Entity.UserInfo;
+import com.Cryptopay.Repository.UserRepository;
 import com.Cryptopay.Service.*;
-import com.Cryptopay.dtos.RegistrationRequest;
-import com.Cryptopay.dtos.RegistrationResponse;
-import com.Cryptopay.dtos.VerificationResponse;
+import com.Cryptopay.dtos.*;
 import lombok.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,6 +20,8 @@ public class UserController {
     @Autowired
     private UserService userService;
     @Autowired
+    private final UserRepository repository;
+    @Autowired
     private final AddUserService addUser;
     @Autowired
     private final EmailCheck emailChecker;
@@ -34,13 +35,15 @@ public class UserController {
     public UserInfo getUserInfo(String email) {
         return userService.getUserInfo(email);
     }
-    @GetMapping("/Check/{email}")
-    public void check(@PathVariable String email) {
-        emailChecker.emailCheck(email);
+    @GetMapping("/Check{email}")
+    public String check(@PathVariable String email) {
+        return emailChecker.emailCheck(email);
     }
    @PostMapping("/Resend")
-    public String getCode(@RequestBody String email){
-        return userService.resendCode(email);
+    public ResponseEntity<?> getCode(@RequestBody ResetDto reset){
+       String resend = userService.resendCode(reset);
+       ResetResponse response = new ResetResponse(resend);
+       return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
     }
     @PostMapping("/Save")
     public ResponseEntity<?> Add(@RequestBody RegistrationRequest Request) {
