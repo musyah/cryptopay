@@ -6,8 +6,11 @@ import lombok.*;
 
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode
 public class TransactionDto {
-    private final String subject;
-    private final Double Amount;
+    private  String subject;
+    private  Double Amount;
+    private String email;
+
 }

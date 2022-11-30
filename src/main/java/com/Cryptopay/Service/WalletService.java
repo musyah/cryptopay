@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -34,9 +35,9 @@ public class WalletService {
         return (List<Wallet>) repo.findAll();
     }
 
-    public String recharge(Wallet wallet) {
-        return "Succesful";
-    }
+//    public String recharge(Wallet wallet) {
+//        return "Succesful";
+//    }
 
 //    public String see(String email) {
 //        List UserWallet = (List) userRepo.findByEmail(email).getWallet();
@@ -46,9 +47,10 @@ public class WalletService {
         Random rand = new Random();
         int maxValues= 99999999;
         return rand.nextInt(maxValues);
-    };
+    }
 //    @PostConstruct
     public void SendCoins(Wallet wallet,TransactionDto Send) {
+
 
         String trId = String.valueOf(TransactionIdGenerator());
         Transactions transactions = new Transactions(
@@ -58,6 +60,7 @@ public class WalletService {
                 Send.getAmount(),
                 wallet
         );
+
         String Address = Send.getSubject();
         if (repo.findByAddress(Address)!=null) {
             try {

@@ -1,6 +1,8 @@
 package com.Cryptopay.Entity;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -9,8 +11,8 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "token")
-public class ConfirmationCode {
+@Table(name = "")
+public class ResetCode {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -27,12 +29,4 @@ public class ConfirmationCode {
             name = "userId"
     )
     private UserInfo userInfo;
-
-    public ConfirmationCode(String code, LocalDateTime createdAt, LocalDateTime expiresAt, UserInfo userInfo) {
-        this.code = code;
-        this.createdAt = createdAt;
-        this.expiresAt = expiresAt;
-        this.userInfo = userInfo;
-    }
-
 }

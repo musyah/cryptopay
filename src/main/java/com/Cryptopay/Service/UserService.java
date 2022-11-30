@@ -98,14 +98,12 @@ public class UserService implements UserDetailsService {
             String message = "Welcome to KryptoPesa your verification code is "+code;
             MessageCreator creator = Message.creator(to, from, message);
             creator.create();
-
             codeService.saveCode(confirmationCode);
             return "Resend Code Successful";
         }
         else {
             throw  new IllegalStateException("Account enabled proceed to Login");
         }
-
     }
     public void reset(String email){
         String link = "http://linktoReset";
